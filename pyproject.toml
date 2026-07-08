@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "khitan-restoration-pipeline"
+version = "0.1.0"
+description = "Unified pipeline for blurry Khitan text restoration."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "opencv-python",
+  "Pillow",
+  "PyYAML",
+  "requests",
+  "scikit-image",
+  "timm",
+  "torch",
+  "torchmetrics",
+  "torchvision",
+]
+
+[project.scripts]
+khitan-restore = "khitan_restore.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["khitan_restore*"]

@@ -1,0 +1,65 @@
+input_path: "/home/sy/dataset/data1/data/test3/light/testL"
+
+dataset:
+  root_dir: "/home/sy/dataset"
+  data_dir: "/home/sy/dataset/data1"
+  components_dir: "/home/sy/dataset/components"
+  checkpoints_dir: "/home/sy/checkpoints"
+
+search_roots:
+  - "/home/sy/dataset"
+  - "/home/sy/checkpoints"
+
+super_resolution:
+  enabled: true
+  device: "cuda:7"
+  task: "real_sr"
+  scale: 4
+  model_source: "pretrained"
+  pretrained_model_path: "model_zoo/swinir/003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN.pth"
+  auto_download: true
+  tile: null
+  tile_overlap: 32
+
+segmentation:
+  enabled: true
+  save_patches: true
+  save_debug: true
+  config_overrides:
+    keep_only_primary: true
+    save_component_size: 128
+    save_component_pad: 12
+
+restoration:
+  enabled: true
+  ckpt_path: "/home/sy/item/swin/runs/instance_restoration_server_sy_quality/checkpoints/instance_restoration_best.pth"
+  config_path: "test/cospnet.yaml"
+  device: "cuda:7"
+  use_ema: true
+  topk: 5
+  bank_batch_size: 64
+  save_bank_preview: true
+
+refinement:
+  enabled: true
+  mode: "learned"
+  model_path: "/home/sy/item/swin/runs/learned_refinement_data2/checkpoints/learned_refinement_best.pth"
+  device: "cuda:7"
+  lr_dir: "/home/sy/dataset/data1/data/train/trainL"
+  rank: 1
+  prior_threshold: 0.20
+  base_prior_weight: 0.22
+  edge_prior_weight: 0.12
+  disagreement_penalty: 0.58
+  detail_boost: 0.04
+  mask_blur_sigma: 1.2
+  final_sharpen: 0.06
+  fusion_scales: [1.0]
+
+output:
+  root_dir: "runs/server_sy_learned"
+  super_resolution_dir: "01_super_resolution"
+  segmentation_dir: "02_segmentation"
+  restoration_dir: "03_restoration"
+  refinement_dir: "04_refinement"
+  manifest_name: "pipeline_manifest.json"

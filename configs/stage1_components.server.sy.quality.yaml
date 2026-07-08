@@ -1,0 +1,73 @@
+data:
+  components_root: "/home/sy/dataset/components"
+  annotations_path: "/home/sy/dataset/components/component_annotations.json"
+  vocab_path: "/home/sy/dataset/components/component_vocab.json"
+  auto_build_annotations: true
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  train_split: "train"
+  val_split: "val"
+  image_size: 128
+
+model:
+  num_components: null
+  codebook_dim: 512
+  w_dim: 512
+  base_channels: 512
+  discriminator_base_channels: 64
+  use_noise_in_blocks: false
+  legacy_output_head: false
+
+loss:
+  # Emphasize reconstruction and structure first, since current comp_id labels are weak labels
+  # derived from filename patterns rather than manual taxonomy.
+  lambda_soft_l1: 7.5
+  lambda_mask_bce: 2.5
+  lambda_mask_focal: 2.0
+  lambda_dice: 2.0
+  lambda_ssim: 1.5
+  lambda_edge: 0.8
+  lambda_adv: 0.12
+  lambda_diversity: 0.03
+  focal_alpha: 0.30
+  focal_gamma: 2.0
+  diversity_margin: 0.18
+
+train:
+  device: "cuda:7"
+  seed: 1234
+  # 8 is a safer quality-oriented default for a 512-channel generator with R1 regularization.
+  # If your GPU 7 has plenty of memory and stays stable, you can later raise this to 12 or 16.
+  batch_size: 8
+  val_batch_size: 8
+  num_workers: 4
+  max_epochs: 400
+  max_steps: 22000
+  generator_lr: 8.0e-5
+  discriminator_lr: 1.6e-4
+  weight_decay: 1.0e-5
+  beta1: 0.0
+  beta2: 0.99
+  grad_clip: 2.5
+  balanced_sampling: true
+  # Delay GAN so the generator first learns stable component geometry.
+  gan_start_step: 1200
+  gan_ramp_steps: 3000
+  d_reg_every: 8
+  r1_gamma: 5.0
+  ema_decay: 0.9995
+  log_every: 20
+  validate_every: 100
+  save_every: 250
+  preview_count: 16
+  resume_path: null
+
+output:
+  root_dir: "runs/stage1_training_server_sy_quality"
+  checkpoints_dir: "checkpoints"
+  previews_dir: "previews"
+  metrics_name: "metrics_history.json"
+  best_checkpoint_name: "stage1_best.pth"
+  last_checkpoint_name: "stage1_last.pth"
+  resolved_config_name: "resolved_stage1_config.json"

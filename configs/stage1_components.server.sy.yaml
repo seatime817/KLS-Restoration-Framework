@@ -1,0 +1,68 @@
+data:
+  components_root: "/home/sy/dataset/components"
+  annotations_path: "/home/sy/dataset/components/component_annotations.json"
+  vocab_path: "/home/sy/dataset/components/component_vocab.json"
+  auto_build_annotations: true
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  train_split: "train"
+  val_split: "val"
+  image_size: 128
+
+model:
+  num_components: null
+  codebook_dim: 512
+  w_dim: 512
+  base_channels: 512
+  discriminator_base_channels: 64
+  use_noise_in_blocks: false
+  legacy_output_head: false
+
+loss:
+  lambda_soft_l1: 6.0
+  lambda_mask_bce: 2.0
+  lambda_mask_focal: 1.5
+  lambda_dice: 1.5
+  lambda_ssim: 1.0
+  lambda_edge: 0.5
+  lambda_adv: 0.2
+  lambda_diversity: 0.02
+  focal_alpha: 0.25
+  focal_gamma: 2.0
+  diversity_margin: 0.20
+
+train:
+  device: "cuda:7"
+  seed: 1234
+  batch_size: 16
+  val_batch_size: 16
+  num_workers: 4
+  max_epochs: 200
+  max_steps: null
+  generator_lr: 1.0e-4
+  discriminator_lr: 2.0e-4
+  weight_decay: 0.0
+  beta1: 0.0
+  beta2: 0.99
+  grad_clip: 5.0
+  balanced_sampling: true
+  gan_start_step: 500
+  gan_ramp_steps: 1000
+  d_reg_every: 16
+  r1_gamma: 10.0
+  ema_decay: 0.999
+  log_every: 25
+  validate_every: 200
+  save_every: 500
+  preview_count: 12
+  resume_path: null
+
+output:
+  root_dir: "runs/stage1_training_server_sy"
+  checkpoints_dir: "checkpoints"
+  previews_dir: "previews"
+  metrics_name: "metrics_history.json"
+  best_checkpoint_name: "stage1_best.pth"
+  last_checkpoint_name: "stage1_last.pth"
+  resolved_config_name: "resolved_stage1_config.json"

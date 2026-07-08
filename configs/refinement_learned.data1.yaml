@@ -1,0 +1,50 @@
+data:
+  restoration_results_path: "/home/sy/item/swin/runs/data2_train/03_restoration/retrieval_results_all.json"
+  lr_dir: "/home/sy/dataset/data1/data/train1/trainL"
+  gt_dir: "/home/sy/dataset/data1/data/train1/trainH"
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  resize_height: 512
+  resize_width: 512
+  prior_rank: 1
+  max_images: null
+
+model:
+  base_channels: 24
+  roi_size: 48
+
+loss:
+  lambda_l1: 4.0
+  lambda_bce: 2.0
+  lambda_dice: 1.5
+  lambda_edge: 0.8
+  lambda_confidence: 0.6
+  lambda_prior_suppress: 0.4
+
+train:
+  device: "cuda:6"
+  seed: 1234
+  batch_size: 4
+  val_batch_size: 8
+  num_workers: 8
+  max_epochs: 50
+  max_steps: null
+  learning_rate: 2.0e-4
+  weight_decay: 1.0e-5
+  grad_clip: 2.0
+  ema_decay: 0.999
+  log_every: 20
+  validate_every: 1000
+  save_every: 2000
+  preview_count: 4
+  resume_path: null
+
+output:
+  root_dir: "runs/learned_refinement_data2"
+  checkpoints_dir: "checkpoints"
+  previews_dir: "previews"
+  metrics_name: "metrics_history.json"
+  best_checkpoint_name: "learned_refinement_best.pth"
+  last_checkpoint_name: "learned_refinement_last.pth"
+  resolved_config_name: "resolved_learned_refinement_config.json"

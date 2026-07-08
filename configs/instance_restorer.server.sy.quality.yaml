@@ -1,0 +1,53 @@
+data:
+  components_root: "/home/sy/dataset/components"
+  annotations_path: "/home/sy/dataset/components/component_annotations.json"
+  vocab_path: "/home/sy/dataset/components/component_vocab.json"
+  auto_build_annotations: true
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  train_split: "train"
+  val_split: "val"
+  output_size: 128
+  feature_mask_size: 64
+  neighbor_topk: 8
+  neighbor_random_topn: 3
+
+model:
+  input_channels: 4
+  base_channels: 32
+  output_size: 128
+
+loss:
+  lambda_l1: 5.0
+  lambda_bce: 2.0
+  lambda_ssim: 1.4
+  lambda_edge: 1.0
+  lambda_mask_consistency: 1.2
+
+train:
+  device: "cuda:7"
+  seed: 1234
+  batch_size: 12
+  val_batch_size: 12
+  num_workers: 4
+  max_epochs: 300
+  max_steps: 18000
+  learning_rate: 2.0e-4
+  weight_decay: 1.0e-5
+  grad_clip: 2.5
+  ema_decay: 0.9995
+  log_every: 20
+  validate_every: 100
+  save_every: 250
+  preview_count: 12
+  resume_path: null
+
+output:
+  root_dir: "runs/instance_restoration_server_sy_quality"
+  checkpoints_dir: "checkpoints"
+  previews_dir: "previews"
+  metrics_name: "metrics_history.json"
+  best_checkpoint_name: "instance_restoration_best.pth"
+  last_checkpoint_name: "instance_restoration_last.pth"
+  resolved_config_name: "resolved_instance_restoration_config.json"

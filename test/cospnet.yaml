@@ -1,0 +1,145 @@
+# COSPNet Configuration File
+
+# ─── Dataset ────────────────────────────────────────────────────────────────
+data:
+  train_hr_dir: "datasets/khitan/train/hr"
+  train_annotation: "datasets/khitan/train/annotations.json"
+  val_hr_dir: "datasets/khitan/val/hr"
+  val_annotation: "datasets/khitan/val/annotations.json"
+  test_hr_dir: "datasets/khitan/test/hr"
+  test_annotation: "datasets/khitan/test/annotations.json"
+  real_test_dir: "datasets/khitan/real_rubbings"
+  background_dir: "datasets/DIV2K/train_HR"
+  num_workers: 8
+  scale: 4               # SR scale factor: 2 or 4
+  hr_size: 128           # HR image height (width is variable)
+  lr_size: 32            # LR image height = hr_size // scale
+
+# ─── Model ──────────────────────────────────────────────────────────────────
+model:
+  # Component Codebook
+  num_components: 790         # K: total number of stroke components (from actual data)
+  num_chars: 1791             # M: total known characters (from actual data)
+  codebook_dim: 512           # Dimension of each codebook entry
+
+  # StyleGAN
+  stylegan_resolution: 128    # Output resolution of character StyleGAN
+  stylegan_channels: 512
+  stylegan_layers: 8
+  w_dim: 512                  # W-space dimension
+
+  # Graph Neural Network
+  gnn_layers: 4
+  gnn_heads: 8
+  gnn_node_dim: 512
+  gnn_edge_dim: 64
+
+  # Composition Transformer
+  compose_layers: 4
+  compose_heads: 8
+  compose_ffn_dim: 2048
+
+  # Transformer Encoder (ViT-Base)
+  vit_patch_size: 16
+  vit_depth: 12
+  vit_heads: 8
+  vit_dim: 768
+
+  # UNet SR Network
+  unet_base_channels: 64
+  unet_levels: 5
+
+  # Confidence threshold for closed/open-set routing
+  confidence_threshold: 0.7
+  confidence_lower: 0.5       # Below this: pure open-set
+
+# ─── Training ───────────────────────────────────────────────────────────────
+train:
+  # Stage 1: Component StyleGAN + Codebook pretraining
+  stage1:
+    epochs: 100000            # iterations
+    batch_size: 16
+    lr: 1.0e-4
+    lr_stylegan: 2.0e-4       # generator learning rate
+    lr_D: 4.0e-4              # D learning rate (TTUR: D 2x faster than G)
+    save_freq: 5000
+    log_freq: 500
+    vis_freq: 500             # save GT vs Fake comparison images
+    d_warmup: 3000            # G trains alone for first N steps (reduced from 5k)
+    d_reg_every: 16           # R1 penalty every N steps (lazy reg)
+    r1_gamma: 10.0            # R1 gradient penalty weight
+    ema_decay: 0.999          # EMA decay for generator
+    lambda_adv: 1.0           # adversarial loss weight (ramped in training)
+    lambda_rec: 10.0          # L1 reconstruction (scheduled: 10 -> 5)
+    lambda_recog: 0.05
+    lambda_div: 0.01
+    lambda_focal: 2.0         # focal structure loss (replaces BCE)
+    lambda_ssim: 1.0          # structural similarity
+    lambda_min_dist: 0.1      # codebook min-distance penalty (prevent collision)
+    sampler_update_freq: 2000 # rebuild HEM sampler every N steps
+
+  # Stage 2: GSAPG training
+  stage2:
+    epochs: 50000
+    batch_size: 16
+    lr: 1.0e-4
+    save_freq: 2000
+    log_freq: 200
+
+  # Stage 3: End-to-end fine-tuning
+  stage3:
+    epochs: 200000
+    batch_size: 4
+    lr: 1.0e-4
+    lr_stylegan: 1.0e-6       # Fine-tune StyleGAN with small lr
+    save_freq: 5000
+    log_freq: 500
+    lambda_adv: 0.1
+    lambda_per: 0.05
+    lambda_str: 0.05
+    lambda_conf: 0.1
+    lambda_open: 0.05
+
+  # Optimizer
+  optimizer: "adam"
+  beta1: 0.9
+  beta2: 0.999
+
+  # Scheduler
+  scheduler: "cosine"
+  warmup_iters: 1000
+
+# ─── Degradation (ADS) ──────────────────────────────────────────────────────
+degradation:
+  # Standard degradations
+  blur_kernel_size: [7, 21]
+  blur_sigma: [0.2, 3.0]
+  noise_std: [0, 25]
+  jpeg_quality: [30, 95]
+  # Khitan-specific degradations
+  erosion_prob: 0.5
+  erosion_kernel_size: [2, 5]
+  texture_overlay_prob: 0.4
+  texture_alpha: [0.1, 0.4]
+  stroke_break_prob: 0.3
+  stroke_break_width: [1, 3]
+  # Geometric
+  affine_prob: 0.3
+  affine_scale: [0.95, 1.05]
+  affine_shear: [-5, 5]
+
+# ─── Paths ───────────────────────────────────────────────────────────────────
+paths:
+  checkpoint_dir: "checkpoints"
+  log_dir: "logs"
+  result_dir: "results"
+  stage1_ckpt: "checkpoints/stage1_best.pth"
+  stage2_ckpt: "checkpoints/stage2_best.pth"
+  stage3_ckpt: "checkpoints/stage3_best.pth"
+  vgg_path: "pretrained/vgg19.pth"
+
+# ─── Evaluation ──────────────────────────────────────────────────────────────
+eval:
+  metrics: ["psnr", "ssim", "lpips", "siou"]
+  recognizer_path: "pretrained/khitan_recognizer.pth"
+  batch_size: 8

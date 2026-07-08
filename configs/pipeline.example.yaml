@@ -1,0 +1,69 @@
+input_path: "sample_data/input.png"
+# input_path should point to the low-resolution images to be restored.
+# Example on your server:
+# input_path: "/home/sy/dataset/data/train/trainL"
+
+dataset:
+  root_dir: null
+  data_dir: null
+  components_dir: null
+  checkpoints_dir: null
+
+search_roots:
+  - "."
+  # Add your remote server mount path here.
+  # - "/mnt/khitan"
+
+super_resolution:
+  enabled: true
+  device: null
+  task: "real_sr"
+  scale: 4
+  # Use the released SwinIR weight first so you can validate the whole pipeline quickly.
+  model_source: "pretrained"
+  pretrained_model_path: "model_zoo/swinir/003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN.pth"
+  # When you want to switch to your own SwinIR checkpoint later:
+  # model_source: "custom"
+  # custom_model_path: "checkpoints/my_swinir_finetune.pth"
+  auto_download: true
+  tile: null
+  tile_overlap: 32
+
+segmentation:
+  enabled: true
+  save_patches: true
+  save_debug: true
+  config_overrides:
+    keep_only_primary: true
+    save_component_size: 128
+    save_component_pad: 12
+
+restoration:
+  enabled: true
+  ckpt_path: "checkpoints/stage1_best.pth"
+  config_path: "test/cospnet.yaml"
+  device: null
+  use_ema: true
+  topk: 5
+  bank_batch_size: 64
+  save_bank_preview: true
+
+refinement:
+  enabled: true
+  rank: 1
+  prior_threshold: 0.15
+  base_prior_weight: 0.40
+  edge_prior_weight: 0.35
+  disagreement_penalty: 0.30
+  detail_boost: 0.15
+  mask_blur_sigma: 2.0
+  final_sharpen: 0.20
+  fusion_scales: [1.0, 0.5]
+
+output:
+  root_dir: "runs/example"
+  super_resolution_dir: "01_super_resolution"
+  segmentation_dir: "02_segmentation"
+  restoration_dir: "03_restoration"
+  refinement_dir: "04_refinement"
+  manifest_name: "pipeline_manifest.json"
