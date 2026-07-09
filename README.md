@@ -86,12 +86,6 @@ model_zoo/
 
 ## Training
 
-Build component annotations if they are not already included:
-
-```bash
-python scripts/build_component_annotations.py --components-root dataset/components
-```
-
 Train Stage1 component codebook + StyleGAN:
 
 ```bash
