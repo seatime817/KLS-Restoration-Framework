@@ -183,11 +183,50 @@ python -m khitan_restore.cli pipeline \
 
 ### Quantitative Results
 
-|        Method         | PSNR | SSIM | LPIPS | STSC | IoU  |     Model     |
-| :-------------------: | :--: | :--: | :---: | :--: | :--: | :-----------: |
-|        SwinIR         | TODO | TODO | TODO  | TODO | TODO | Auto-download |
-| SwinIR + Stage1 Prior | TODO | TODO | TODO  | TODO | TODO |     TODO      |
-|      Full Model       | TODO | TODO | TODO  | TODO | TODO |     TODO      |
+#### Light Degradation
+
+|   Method    |   PSNR    |   SSIM   |  LPIPS   |    F1    |
+| :---------: | :-------: | :------: | :------: | :------: |
+|   Uformer   |   26.14   |   .957   |   .027   |   .968   |
+|   RubGAN    |   23.79   |   .943   |   .058   |   .965   |
+|   DocDiff   |   22.00   |   .909   |   .072   |   .953   |
+|    GSDM     |   14.66   |   .674   |   .457   |   .802   |
+|   DiffACR   |   27.73   |   .970   | **.015** |   .972   |
+|   DocRes    |   14.30   |   .823   |   .259   |   .754   |
+|  MFE-GAN-U  |   9.86    |   .702   |   .364   |   .703   |
+| MFE-GAN-U++ |   12.66   |   .797   |   .301   |   .810   |
+|  DocUnfold  |   25.05   |   .947   |   .028   |   .965   |
+|  **Ours**   | **29.98** | **.984** | **.015** | **.985** |
+
+#### Medium Degradation
+
+|   Method    |   PSNR    |   SSIM   |  LPIPS   |    F1    |
+| :---------: | :-------: | :------: | :------: | :------: |
+|   Uformer   |   24.59   |   .941   |   .035   |   .962   |
+|   RubGAN    |   22.99   |   .930   |   .063   |   .959   |
+|   DocDiff   |   20.83   |   .884   |   .087   |   .941   |
+|    GSDM     |   15.36   |   .733   |   .421   |   .819   |
+|   DiffACR   |   26.51   |   .963   |   .019   |   .941   |
+|   DocRes    |   13.01   |   .793   |   .311   |   .670   |
+|  MFE-GAN-U  |   9.85    |   .686   |   .364   |   .702   |
+| MFE-GAN-U++ |   12.70   |   .785   |   .298   |   .811   |
+|  DocUnfold  |   23.84   |   .932   |   .034   |   .959   |
+|  **Ours**   | **28.78** | **.981** | **.018** | **.982** |
+
+#### Severe Degradation
+
+|   Method    |   PSNR    |   SSIM   |  LPIPS   |    F1    |
+| :---------: | :-------: | :------: | :------: | :------: |
+|   Uformer   |   19.80   |   .806   |   .104   |   .894   |
+|   RubGAN    |   17.83   |   .704   |   .163   |   .805   |
+|   DocDiff   |   16.87   |   .687   |   .201   |   .819   |
+|    GSDM     |   13.96   |   .707   |   .466   |   .682   |
+|   DiffACR   |   20.26   |   .813   | **.097** |   .882   |
+|   DocRes    |   11.15   |   .732   |   .470   |   .419   |
+|  MFE-GAN-U  |   9.29    |   .656   |   .383   |   .668   |
+| MFE-GAN-U++ |   11.39   |   .736   |   .332   |   .752   |
+|  DocUnfold  |   19.54   |   .797   | **.097** |   .889   |
+|  **Ours**   | **22.54** | **.883** |   .098   | **.919** |
 
 ### Qualitative Results
 
