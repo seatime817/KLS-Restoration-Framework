@@ -118,7 +118,7 @@ Run the full pipeline:
 
 ```bash
 python -m khitan_restore.cli pipeline \
-  --config configs/pipeline.example.yaml \
+  --config configs/pipeline.server.sy.learned.yaml \
   --input dataset/data/test/testL \
   --output runs/test_pipeline
 ```
