@@ -13,7 +13,7 @@ Official PyTorch implementation of **Digital Restoration of Khitan Large Script 
 
 ![Framework](docs/results/Framework.png)
 
-We propose a restoration pipeline for blurry Khitan character/text images. The method first enhances low-quality inputs using SwinIR, segments character components, retrieves component-level structural priors, reconstructs candidate glyphs with a Stage1 codebook + StyleGAN model, and finally refines the image with prior-guided fusion.
+We propose a restoration pipeline for blurry Khitan character/text images. 
 
 ## News
 
