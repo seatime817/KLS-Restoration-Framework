@@ -269,7 +269,7 @@ If you find this repository helpful, please consider citing:
 
 ```bibtex
 @misc{khitan_restoration_2026,
-  title={Khitan Character Image Restoration with SwinIR, Component Retrieval, and Prior-Guided Refinement},
+  title={Digital Restoration of Khitan Large Script Inscriptions: A Cultural Heritage Perspective},
   author={TODO},
   year={2026},
   howpublished={\url{https://github.com/<YOUR_NAME>/<YOUR_REPO>}}
