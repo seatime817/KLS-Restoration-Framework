@@ -253,54 +253,6 @@ python -m khitan_restore.evaluate_refinement \
 
 The evaluator reports PSNR, SSIM, LPIPS, STSC, IoU, precision, recall, F1, and Dice when ground-truth images are available.
 
-## Repository Structure
-
-| File / Folder                                      | Description                                                  |
-| :------------------------------------------------- | :----------------------------------------------------------- |
-| `configs/pipeline.example.yaml`                    | Example configuration for the full restoration pipeline.     |
-| `configs/pipeline.server.sy.yaml`                  | Server-side full-pipeline configuration used in the original experiments. |
-| `configs/pipeline.server.sy.learned.yaml`          | Server-side full-pipeline configuration with learned refinement enabled. |
-| `configs/stage1_components.example.yaml`           | Example configuration for Stage1 component codebook + StyleGAN training. |
-| `configs/stage1_components.server.sy.yaml`         | Server-side Stage1 training configuration.                   |
-| `configs/stage1_components.server.sy.quality.yaml` | Quality-focused server-side Stage1 training configuration.   |
-| `configs/instance_restorer.server.sy.quality.yaml` | Configuration for instance retrieval and conditional component restoration training. |
-| `configs/refinement_learned.data1.yaml`            | Configuration for learned ROI-based refinement training.     |
-| `configs/refinement_learned.server.sy.yaml`        | Server-side learned refinement configuration.                |
-| `khitan_restore/cli.py`                            | Main command-line entry point for training, testing, and pipeline inference. |
-| `khitan_restore/config.py`                         | Dataclass-based configuration definitions and config loading utilities. |
-| `khitan_restore/pipeline.py`                       | Orchestrates super-resolution, segmentation, restoration, and refinement stages. |
-| `khitan_restore/super_resolution.py`               | SwinIR wrapper for low-quality image super-resolution.       |
-| `khitan_restore/segmentation.py`                   | Wrapper for component segmentation backend.                  |
-| `khitan_restore/restoration.py`                    | Component restoration stage wrapper.                         |
-| `khitan_restore/instance_restoration.py`           | Instance retrieval and conditional component restoration implementation. |
-| `khitan_restore/refinement.py`                     | Rule-based prior-guided refinement stage.                    |
-| `khitan_restore/learned_refinement.py`             | Learned refinement network and inference utilities.          |
-| `khitan_restore/stage1_training.py`                | Stage1 component codebook + StyleGAN training code.          |
-| `khitan_restore/instance_restoration_training.py`  | Instance restoration training code.                          |
-| `khitan_restore/learned_refinement_training.py`    | Learned refinement training code.                            |
-| `khitan_restore/evaluate_refinement.py`            | Evaluation script for final restoration outputs.             |
-| `khitan_restore/evaluate_refinement1.py`           | Alternative evaluation script retained from experiments.     |
-| `khitan_restore/component_annotations.py`          | Builds component annotation and vocabulary files from component data. |
-| `khitan_restore/io_utils.py`                       | Shared filesystem, JSON/YAML, and image-listing utilities.   |
-| `khitan_restore/legacy_loader.py`                  | Loads legacy experimental modules behind the unified interface. |
-| `models/network_swinir.py`                         | SwinIR network architecture definition.                      |
-| `scripts/run_pipeline.py`                          | Thin wrapper for the unified CLI.                            |
-| `scripts/train_stage1.py`                          | Thin wrapper for Stage1 training.                            |
-| `scripts/train_instance_restorer.py`               | Thin wrapper for instance restoration training.              |
-| `scripts/train_learned_refinement.py`              | Thin wrapper for learned refinement training.                |
-| `scripts/build_component_annotations.py`           | Thin wrapper for building component annotation files.        |
-| `test/component_stylegan.py`                       | Legacy component StyleGAN implementation used by Stage1 and retrieval. |
-| `test/test_stage1_gan_best_retrieval_modified.py`  | Legacy Stage1 retrieval and generation test script.          |
-| `test/cospnet.yaml`                                | Legacy model/config file used by component retrieval.        |
-| `utils/util_calculate_psnr_ssim.py`                | PSNR, SSIM, and PSNR-B metric utilities.                     |
-| `main_test_swinir.py`                              | Original SwinIR test script retained for compatibility.      |
-| `requirements.txt`                                 | Python dependency list.                                      |
-| `pyproject.toml`                                   | Python package metadata and install configuration.           |
-| `README_PROJECT.md`                                | Earlier project notes kept for reference.                    |
-| `docs/results/README.md`                           | Placeholder instructions for result figures.                 |
-
-Generated files such as `runs/`, `dataset/`, `checkpoints/`, `model_zoo/`, `*.pth`, and `__pycache__/` are ignored by Git.
-
 ## Acknowledgement
 
 This repository uses and adapts code or ideas from the following projects:
