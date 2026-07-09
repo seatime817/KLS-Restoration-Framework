@@ -130,19 +130,6 @@ python -m khitan_restore.cli pipeline \
   --output runs/test_pipeline
 ```
 
-
-If you already have a `segment_results.json`, you can skip segmentation and start from component restoration:
-
-```bash
-python -m khitan_restore.cli restore-components \
-  --config configs/pipeline.example.yaml \
-  --segment-json path/to/segment_results.json \
-  --output runs/restore_only \
-  --ckpt checkpoints/stage1_best.pth
-```
-
-Note: the current project references `khitan_auto_component_segmenter_paper_experiment/segment_core.py` as the segmentation backend. Add that folder before publishing if you want the `segment` and full `pipeline` commands to run out of the box.
-
 ## Evaluation
 
 Evaluate final refinement outputs against ground truth:
