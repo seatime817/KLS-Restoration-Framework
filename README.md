@@ -13,7 +13,6 @@ PyTorch implementation of **Digital Restoration of Khitan Large Script Inscripti
 
 ![Framework](docs/results/Framework.png)
 
-We propose a restoration pipeline for blurry Khitan character/text images. 
 
 ## News
 
