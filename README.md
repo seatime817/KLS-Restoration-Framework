@@ -50,6 +50,7 @@ Large files are not committed to this repository. Upload datasets and `.pth` wei
 | Name | Description | Link |
 | --- | --- | --- |
 | Khitan paired LR/HR data | Paired low-resolution and high-resolution images for learned refinement. Expected roots: `dataset/data/train/trainL` and `dataset/data/train/trainH`. | TODO: add public URL |
+| Khitan test images | Low-quality test images for inference. Expected root: `dataset/data/test/testL`. | TODO: add public URL |
 
 ### Checkpoint Links
 
