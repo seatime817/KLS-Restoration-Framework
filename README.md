@@ -1,6 +1,6 @@
 # Khitan Character Image Restoration
 
-Official PyTorch implementation of **Digital Restoration of Khitan Large Script Inscriptions: A Cultural Heritage Perspective**.
+PyTorch implementation of **Digital Restoration of Khitan Large Script Inscriptions: A Cultural Heritage Perspective**.
 
 > Authors: TODO: add author names  
 > Affiliation: TODO: add affiliation  
