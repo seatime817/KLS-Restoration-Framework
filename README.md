@@ -127,10 +127,10 @@ Output:
 ### Step 3: Generate Component Restoration Priors
 
 ```bash
-nohup python -m khitan_restore.cli restore-components \
+python -m khitan_restore.cli restore-components \
   --config configs/pipeline.server.sy.yaml \
   --segment-json runs/data2_train/02_segmentation/segment_results.json \
-  --output runs/data2_train/03_restoration &
+  --output runs/data2_train/03_restoration
 ```
 
 Input:
@@ -149,8 +149,8 @@ This command is usually slower, so `nohup ... &` is used to keep it running afte
 ### Step 4: Train Learned Refinement
 
 ```bash
-nohup python -m khitan_restore.cli train-learned-refinement \
-  --config configs/refinement_learned.data1.yaml &
+python -m khitan_restore.cli train-learned-refinement \
+  --config configs/refinement_learned.data1.yaml
 ```
 
 `configs/refinement_learned.data1.yaml` expects:
@@ -178,43 +178,6 @@ python -m khitan_restore.cli pipeline \
   --input dataset/data/test/testL \
   --output runs/test_pipeline
 ```
-
-Run each stage separately:
-
-```bash
-python -m khitan_restore.cli super-resolve \
-  --config configs/pipeline.example.yaml \
-  --input dataset/data/test/testL \
-  --output runs/sr_only
-
-python -m khitan_restore.cli segment \
-  --config configs/pipeline.example.yaml \
-  --input runs/sr_only/images \
-  --output runs/seg_only
-
-python -m khitan_restore.cli restore-components \
-  --config configs/pipeline.example.yaml \
-  --segment-json runs/seg_only/segment_results.json \
-  --output runs/restore_only \
-  --ckpt checkpoints/stage1_best.pth
-
-python -m khitan_restore.cli refine \
-  --config configs/pipeline.example.yaml \
-  --restoration-input runs/restore_only \
-  --output runs/final_only
-```
-
-If `segment_results.json` is already available, restoration can start from the retrieval stage:
-
-```bash
-python -m khitan_restore.cli restore-components \
-  --config configs/pipeline.example.yaml \
-  --segment-json path/to/segment_results.json \
-  --output runs/restore_only \
-  --ckpt checkpoints/stage1_best.pth
-```
-
-Note: the current code expects `khitan_auto_component_segmenter_paper_experiment/segment_core.py` as the segmentation backend. Add this folder before release if the full pipeline should run directly after cloning.
 
 ## Results
 
