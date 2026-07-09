@@ -58,7 +58,6 @@ dataset/
 
 |         Dataset          | Description                                                  | Link |
 | :----------------------: | :----------------------------------------------------------- | :--: |
-|    Khitan components     | Component masks and soft images for Stage1 / instance restoration. | TODO |
 | Khitan paired LR/HR data | Paired low-resolution and high-resolution images for learned refinement. | TODO |
 |     Khitan test set      | Low-quality test images and optional ground truth.           | TODO |
 
