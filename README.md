@@ -166,20 +166,6 @@ The training output is written to:
 - `runs/learned_refinement_data2/previews`
 - `runs/learned_refinement_data2/metrics_history.json`
 
-### Optional: Train Stage1 / Instance Restoration From Scratch
-
-If the released checkpoints are not available, the Stage1 and instance restoration models can be trained with:
-
-```bash
-python scripts/train_stage1.py \
-  --config configs/stage1_components.example.yaml \
-  --output runs/stage1_training
-
-python scripts/train_instance_restorer.py \
-  --config configs/instance_restorer.server.sy.quality.yaml \
-  --output runs/instance_restoration_training
-```
-
 All training commands support checkpoint resume with `--resume <checkpoint.pth>`.
 
 ## Testing
