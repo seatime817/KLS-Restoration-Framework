@@ -235,9 +235,7 @@ python -m khitan_restore.cli pipeline \
 Add result images to `docs/results/` before publishing. Recommended files:
 
 - `framework.png`
-- `comparison_01.png`
-- `comparison_02.png`
-- `failure_cases.png`
+- `comparison.png`
 
 ## Evaluation
 
