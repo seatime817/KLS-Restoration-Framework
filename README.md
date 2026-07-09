@@ -130,30 +130,6 @@ python -m khitan_restore.cli pipeline \
   --output runs/test_pipeline
 ```
 
-#Run stages separately:
-
-```bash
-python -m khitan_restore.cli super-resolve \
-  --config configs/pipeline.example.yaml \
-  --input dataset/data/test/testL \
-  --output runs/sr_only
-
-python -m khitan_restore.cli segment \
-  --config configs/pipeline.example.yaml \
-  --input runs/sr_only/images \
-  --output runs/seg_only
-
-python -m khitan_restore.cli restore-components \
-  --config configs/pipeline.example.yaml \
-  --segment-json runs/seg_only/segment_results.json \
-  --output runs/restore_only \
-  --ckpt checkpoints/stage1_best.pth
-
-python -m khitan_restore.cli refine \
-  --config configs/pipeline.example.yaml \
-  --restoration-input runs/restore_only \
-  --output runs/final_only
-```
 
 If you already have a `segment_results.json`, you can skip segmentation and start from component restoration:
 
