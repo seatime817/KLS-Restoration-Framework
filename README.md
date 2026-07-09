@@ -230,7 +230,7 @@ python -m khitan_restore.cli pipeline \
 
 ### Qualitative Results
 
-![Qualitative comparison](docs/results/comparison_01.png)
+![Qualitative comparison](docs/results/comparison.png)
 
 Add result images to `docs/results/` before publishing. Recommended files:
 
