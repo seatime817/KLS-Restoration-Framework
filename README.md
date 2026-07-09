@@ -1,6 +1,6 @@
 # Khitan Character Image Restoration
 
-This repository contains the experimental code for blurry Khitan character/text image restoration. The pipeline combines SwinIR super-resolution, component segmentation, component retrieval/restoration, and prior-guided refinement.
+Code for "Digital Restoration of Khitan Large Script Inscriptions: A Cultural Heritage Perspective"
 
 ## Highlights
 
