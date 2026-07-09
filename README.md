@@ -130,7 +130,7 @@ python -m khitan_restore.cli pipeline \
   --output runs/test_pipeline
 ```
 
-Run stages separately:
+#Run stages separately:
 
 ```bash
 python -m khitan_restore.cli super-resolve \
