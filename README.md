@@ -11,7 +11,7 @@ PyTorch implementation of **Digital Restoration of Khitan Large Script Inscripti
 
 ---
 
-![Framework](docs/results/Framework.png)
+![Framework](docs/results/framework.png)
 
 
 ## News
